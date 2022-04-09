@@ -7,7 +7,7 @@ app.engine('html', require('ejs').renderFile);
 const { models: { User }} = require('./db');
 const path = require('path');
 
-app.get('/', (req, res)=> res.render(path.join(__dirname, 'index.html'), { GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID }));
+app.get('/', (req, res)=> res.render(path.join(__dirname, 'index.html'), { GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID}));
 
 app.get('/api/auth', async(req, res, next)=> {
   try {
@@ -23,11 +23,11 @@ app.get('/github/callback', async(req, res, next)=> {
     const token = await User.authenticate(req.query.code);
     res.send(`
       <html>
-       <body>
-       <script>
+      <body>
+      <script>
         window.localStorage.setItem('token', '${token}');
         window.document.location = '/';
-       </script>
+      </script>
         </body>
       </html>
     `);
